@@ -8,45 +8,36 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class VerifySchool extends AppCompatActivity {
+EditText ets1,ets2, ets3,ets4;
+SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_verify_school);
 
-        final EditText verify = (EditText) findViewById(R.id.verifyField);
-
-        Button btnSave = (Button) findViewById(R.id.saveBtn);
-        Button btnVerify = (Button) findViewById(R.id.nxtBtn);
-
-        btnSave.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-
-                String verifySchool =  verify.getText().toString();
-                SharedPreferences preferences = getSharedPreferences("MYPREFS",MODE_PRIVATE);
-
-                String verifying = preferences.getString(verifySchool+"data", "School not competing");
-                SharedPreferences.Editor editor = preferences.edit();
-
-                editor.commit();
-
-                Intent verifyScreen = new Intent(VerifySchool.this, MainActivity.class);
-                startActivity(verifyScreen);
-
-            }
-
-        });
-
-        btnVerify.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent addSchool = new Intent(VerifySchool.this, MainActivity.class);
-                startActivity(addSchool);
-            }
-        });
+        ets1 = findViewById(R.id.verifyField);
 
     }
+    public void validataData(View v){
+        sp = getSharedPreferences("data1", MODE_PRIVATE);
+        String s1SP= sp.getString("s1", null);
+        String s2SP= sp.getString("s2", null);
+        String s3SP= sp.getString("s3", null);
+        String s4SP= sp.getString("s4", null);
+        String sc1 = ets1.getText().toString();
+
+        if(s1SP.equals(sc1) || s2SP.equals(sc1) || s3SP.equals(sc1) || s4SP.equals(sc1)) {
+            Toast.makeText(this, "School is participating in UAAP", Toast.LENGTH_SHORT).show();
+        }
+    else
+    {
+        Toast.makeText(this, "School is not participating in UAAP", Toast.LENGTH_SHORT).show();
+    }
+
+
+     }
 }
